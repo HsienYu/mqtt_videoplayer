@@ -1,0 +1,26 @@
+{
+  "name": "mqtt_videoplayer",
+  "version": "1.0.0",
+  "description": "mqtt_videoplayer for VB",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HsienYu/mqtt_videoplayer.git"
+  },
+  "keywords": [
+    "mqtt"
+  ],
+  "author": "chenghsienyu",
+  "license": "Artistic-2.0",
+  "bugs": {
+    "url": "https://github.com/HsienYu/mqtt_videoplayer/issues"
+  },
+  "homepage": "https://github.com/HsienYu/mqtt_videoplayer#readme",
+  "dependencies": {
+    "mqtt": "^2.18.8",
+    "tree-kill": "^1.2.1"
+  }
+}
