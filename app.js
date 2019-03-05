@@ -1,7 +1,7 @@
-// var commandLineArgs = require('command-line-args')
-var mqtt = require('mqtt');
-var exec = require('child_process').exec;
-var kill = require('tree-kill');
+const mqtt = require('mqtt');
+const exec = require('child_process').exec;
+const kill = require('tree-kill');
+const config = require('./config.json');
 
 var myLog = function (lbl, vars) {
     if (verbose) console.log(lbl, vars);
@@ -19,17 +19,19 @@ for (var i = 0; i < args.length; i++) {
 
 myLog('Command parameters: ', opts);
 
-var verbose = (opts.verbose) ? true : false;
+var verbose = (opts.verbose) ? true : config.verbose;
 var url = 'tcp://';
 if (opts.username && opts.password) {
     url += opts.username + ':' + opts.password + '@';
+} else {
+    url += config.username + ':' + config.password + '@';
 }
-url += (opts.host) ? opts.host : 'localhost';
+url += (opts.host) ? opts.host : config.host;
 myLog('MQTT subscriber connecting: ', url);
 var client = mqtt.connect(url);
 var sref = null;
-var namespace = opts.namespace || 'namespace';
-var playerId = opts.playerId || 'player01';
+var namespace = opts.namespace || config.namespace;
+var playerId = opts.playerId || config.playerId;
 
 client.on('connect', function () {
     myLog('MQTT subscriber connected: ', url);
