@@ -58,8 +58,10 @@ client.on('message', function (topic, message) {
     switch (action) {
         case 'play-video':
             stopRunningPlayer();
-            var call = 'omxplayer -o local ' + payload + ' --orientation 0 --aspect-mode stretch';
-            sref = exec(call);
+            if (sref == null) {
+                var call = 'omxplayer -o local ' + payload + ' --orientation 0 --aspect-mode stretch';
+                sref = exec(call);
+            }
             break;
         case 'play-audio':
             stopRunningPlayer();
@@ -68,7 +70,9 @@ client.on('message', function (topic, message) {
             break;
         case 'play-video-loop':
             stopRunningPlayer();
-            sref = exec('trap "exit" INT; while true; do omxplayer -o hdmi ' + payload + '; done')
+            if (sref == null) {
+                sref = exec('trap "exit" INT; while true; do omxplayer -o hdmi ' + payload + '; done')
+            }
             break;
         case 'stop-video':
         case 'stop-audio':
