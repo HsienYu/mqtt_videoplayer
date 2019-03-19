@@ -45,7 +45,7 @@ var stopRunningPlayer = function () {
         kill(sref.pid, 'SIGTERM', function () {
             myLog('Killed OMX player with PID: ', sref.pid);
             sref = null;
-            client.publish('tower/mqtt-media-player/#', 'stop_videos');
+            client.publish(`${config.namespace}/mqtt-media-player/#`, 'stop_videos');
         });
     }
 }
@@ -59,10 +59,14 @@ client.on('message', function (topic, message) {
 
     switch (action) {
         case 'play-video':
-            stopRunningPlayer();
+            //stopRunningPlayer();
             if (sref == null) {
                 var call = 'omxplayer -o local ' + payload + ' --orientation 0 --aspect-mode stretch';
                 sref = exec(call);
+                sref.on('close', (code) => {
+                    console.log('Finished');
+                    stopRunningPlayer();
+                });
             }
             break;
         case 'play-audio':
